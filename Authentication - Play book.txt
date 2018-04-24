@@ -1,0 +1,63 @@
+Register the application with FB
+--------------------------------
+Handle the authentication token when users come back to Ehouse
+set up Authentication in Startup.cs
+1. add below services in ConfigureServices(IServiceCollection services)
+	- 1. AddAuthentication
+	- 2. AddFacebook and set up confoguration call backs (AppID and Key)
+	- 3. AddCookie - for user to sign in + authentication support to the app 
+	- 4. set up options in AddAuthentication 
+         	to say what athutnetication should be used and when, add configuration call backs
+		DefaultChallengeScheme - facebook is the challenge to the user
+ 		DefaultSignInScheme - defualt signin after Authentication has taken place - using cookies
+		DefaultAuthenticateScheme - what scheme to be used as defualt when incoming requests - cookie
+		// DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme; - when not facebook
+
+2. add authotentacation middleware in Configure(IApplicationBuilder app, IHostingEnvironment env)
+	app.UseAuthentication(); between UseStaticFiles() and UseMvc()
+
+Change the GUI for SignIn 
+-------------------------
+_Layout.cshtml - SignIn - asp-controller="Auth" asp-action="SignIn"
+AuthController
+	- [Route("auth")] for the entire controller
+
+
+
+
+
+
+New folder Services
+Interface IUserService - from scratch// working with users
+BCrypt.Net-Next NuGet package
+Class DummyUserServices // create Tuple, Hash the password, ValidateCredentials
+Startup.cs - create dummy users as Dictionary, 
+
+create SignIn form
+------------------
+_LoginPartial.cshtml add SignIn link with controller=Auth action=SignIn
+Add AuthController - add action SignIn, Add [Required("auth")] and Add [Required("signin")]
+Add SignInModel - username and passord properties with [Required(ErrorMessage="xxxxx")], return View (new SigninModel)
+Add Auth folder in View and add SignIn.cshtml - create the form, asp-action="SignIn"
+
+	- Create IUserService type - This is to use in SignIn() - IUserservces interface to use the username property in it
+	private IUserServices _userservices;
+	public AuthController(IUserServices userServices)
+	{
+	   _userservices = userServices;
+
+	}
+
+Add public async Task<IActionResult> SignIn(SignInModel model){} with annotations
+- ValidateCredentials - using the Task<bool> ValidateCredentials(string username, string password, out User user) in IServiceUser
+-get the Claims
+-return to Index
+
+SignOut 
+-------
+- add form with SigOut action to SignOut button
+- create SignOut action inAuth - Add [Route] and [HttpPost]
+- Sign out the default cookies 
+- Return to Index
+
+

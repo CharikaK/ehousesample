@@ -1,0 +1,57 @@
+Todo
+----
+*registering a guest user
+*have to create the role
+*Changes to Profile details
+*OAuth - overcome with technical issues
+
+The Progress
+
+Registration Page
+-----------------
+add the properties in the ApplicationUsesr 
+add-migration
+update-database
+-persistance store / DB and the Domain model are updated
+-EntityFM set other users (none at the moment) with empty strings for those columns in the database
+add properties to RegisterViewModel
+add post code field in the register.cshtml
+[Required] [StringLength(255)] to Postcode
+add fields in the Controller
+//open AspNetUsers to see saved data
+
+
+Profile details - Can I move forward?
+----------------
+IndexViewModel - * add extra address details ?
+ManageController - *public async Task<IActionResult> Index(IndexViewModel model) - update address fileds ?
+Index.cshtml - add HTML elements for address fields ?
+
+
+OAuth
+-----
+Project properties > Debug > IIS Express > SSL (SSL enable - properties - ??)
+Startup.cs
+ public void ConfigureServices(IServiceCollection services)
+        {   services.AddMvc(options=> { options.Filters.Add(new RequireHttpsAttribute());
+            });
+	}
+
+
+FilterConfigs :
+public void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+	    // I added this into last lines
+            app.UseStaticFiles();
+            app.UseRewriter(new RewriteOptions().AddRedirectToHttps(301, 44390));
+	}
+
+
+

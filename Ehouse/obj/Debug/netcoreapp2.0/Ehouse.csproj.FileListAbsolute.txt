@@ -1,0 +1,12 @@
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\bin\Debug\netcoreapp2.0\Ehouse.deps.json
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\bin\Debug\netcoreapp2.0\Ehouse.runtimeconfig.json
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\bin\Debug\netcoreapp2.0\Ehouse.runtimeconfig.dev.json
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\bin\Debug\netcoreapp2.0\Ehouse.dll
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\bin\Debug\netcoreapp2.0\Ehouse.pdb
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.csprojResolveAssemblyReference.cache
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.csproj.CoreCompileInputs.cache
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.AssemblyInfoInputs.cache
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.AssemblyInfo.cs
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.dll
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\Ehouse.pdb
+C:\Users\kiriwandala\source\repos\Ehouse\Ehouse\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<h2>Gallery</h2>
+<!-- add container to display Gallery and the submit button to book the photographer-->
+<div class="row">
+    <div class="col-md-12">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Ehouse photographer collection</h4>
+            <hr />
+            <div class="jumbotron">
+                <h1>Image collection / types of Images </h1>  
+                <p>
+                    <a class="btn btn-lg btn-success" asp-controller="Home" asp-action="Gallery">
+                        Book a photographer
+                    </a>
+                </p>                                
+            </div> 
+        </form>
+    </div>
+</div>

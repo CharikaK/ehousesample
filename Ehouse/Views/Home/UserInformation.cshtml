@@ -1,0 +1,30 @@
+﻿<!--
+<div class="starter-template">
+    <h1>Welcome @User.Identity.Name</h1>
+    <p class="lead">Here are your claims</p>
+    <ul>
+        @*foreach (var claim in User.Claims)
+        {
+            <li>
+                <em>@claim.Type</em>: @claim.Value
+            </li>
+        }*@
+    </ul>
+</div>
+    -->
+<h2>Gallery</h2>
+<!-- add container to display Gallery and the submit button to book the photographer-->
+<div class="row">
+    <div class="col-md-12">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>@User.Identity.Name</h4>
+            <hr />
+            <div class="jumbotron">
+                <h1>Image collection / types of Images </h1>
+                <p> - Edit profile details </p>
+                <p> - My bookings </p>
+                <p> - Client related functions go here </p>
+            </div>
+        </form>
+    </div>
+</div>
