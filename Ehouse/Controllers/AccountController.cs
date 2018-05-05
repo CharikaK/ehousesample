@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Ehouse.Models;
+using Ehouse.Data.Enitities;
 using Ehouse.Models.AccountViewModels;
 using Ehouse.Services;
 
@@ -23,11 +23,11 @@ namespace Ehouse.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
-        private readonly ILogger _logger;
+        private readonly ILogger _logger; //D - Shawn as well
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            SignInManager<ApplicationUser> signInManager, // for loging and logout - This is a service
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -65,7 +65,21 @@ namespace Ehouse.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    // 69-80 - Shawn
+                    if (result.Succeeded)
+                    {
+                        if (Request.Query.Keys.Contains("ReturnUlr"))
+                        {
+                            //return RedirectToLocal(returnUrl);
+                            return Redirect(Request.Query["ReturnUlr"].First());
+                        }
+                        else
+                        {
+                            return RedirectToAction("Gallery", "Home");
+                        }
+                    }
+                    
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -82,6 +96,7 @@ namespace Ehouse.Controllers
                     return View(model);
                 }
             }
+
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -239,9 +254,10 @@ namespace Ehouse.Controllers
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                   /* var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                   */
 
                     // this is responsible for sign in and out
                     await _signInManager.SignInAsync(user, isPersistent: false);

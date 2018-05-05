@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Ehouse.Data.Enitities;
 
+
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+
+
 namespace Ehouse.Data
 {
     // Entity FW core as the store (DB)
@@ -19,8 +24,8 @@ namespace Ehouse.Data
         {            
         }
 
-         //public DbSet<Booking> Bookings { get; set; }
-         //public DbSet<Photographer> Photographers { get; set; }
+         public DbSet<Booking> Bookings { get; set; }
+         public DbSet<Photographer> Photographers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

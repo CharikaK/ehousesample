@@ -24,6 +24,7 @@ namespace Ehouse.Data
 
         public async Task Seed()
         {
+            //12 - 14
             var user = await _usermanager.FindByEmailAsync("customer3@ehouse.com");
             if(user==null)
             {
@@ -32,9 +33,10 @@ namespace Ehouse.Data
                     Firstname = "Charika2",
                     Lastname = "Kiriwandala",
                     Email = "charika2.kiriwandala@ehouse.com",
-                    Postcode = "UB60NP"
+                    Postcode = "UB60NP",
+                    UserName = "charika2.kiriwandala@ehouse.com"
                 };
-
+                //14
                 var result = await _usermanager.CreateAsync(user, "P@ssw0rd!");
                 if (result != IdentityResult.Success)
                 {
@@ -42,6 +44,6 @@ namespace Ehouse.Data
                 }
             }
         }
-        
+        // add the user to Booking - TO DO
     }
 }

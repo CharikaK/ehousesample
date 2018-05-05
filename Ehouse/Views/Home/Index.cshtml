@@ -9,10 +9,16 @@
     }
     else
     {
-        <h1>Welcome to XXXXXXXX</h1>
+        <h1>Welcome to Ehouse (name of the app)</h1>
+        <p class="lead">Attractive content goes here about this service</p>
     }
-    
-    <p class="lead">Attractive content goes here about this service</p>
+
+
+    <p>
+        <a class="btn btn-lg btn-success" asp-controller="Home" asp-action="Gallery">
+            Book a photographer
+        </a>
+    </p>
     @if (!User.Identity.IsAuthenticated)
     {
         <p>

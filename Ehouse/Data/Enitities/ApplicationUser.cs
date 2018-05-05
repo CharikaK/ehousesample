@@ -17,9 +17,10 @@ namespace Ehouse.Data.Enitities
         public string Address03 { get; set; }
         public string City { get; set; }
         public string Postcode { get; set; }
-
+        public Booking booking { get; set; }
         public int Contactnumber  { get; set; }
+       
 
-        
+
     }
 }

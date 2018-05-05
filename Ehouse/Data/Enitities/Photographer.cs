@@ -10,6 +10,10 @@ namespace Ehouse.Data.Enitities
         public int Id { get; set; }
         public string PFname { get; set; }
         public string PLastname { get; set; }
-        public  Booking Booking { get; set; } // photagrapher owns the booking
+        public string PEmail { get; set; }
+        public int PContactNo { get; set; }
+        public ICollection<Booking> Booking { get; set; } // photagrapher owns the booking
+        public ICollection<Category> Category { get; set; }
+
     }
 }

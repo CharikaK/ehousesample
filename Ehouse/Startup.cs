@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ehouse.Data;
-using Ehouse.Models;
+using Ehouse.Data.Enitities;
 using Ehouse.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
@@ -20,34 +20,48 @@ namespace Ehouse
 {
     public class Startup
     {
-        
 
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; } // this is to connect the database
+        private readonly IHostingEnvironment _env; // Shawn - to use in Production environment
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
-
-        public IConfiguration Configuration { get; }
+                
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {         
-                   
+        {
+            //link the database - connection string - .js file
+            //services.AddDbContext<ApplicationDbContext>() -> make the DbContext part of the services  
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("ApplicationConnectionString")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            // Shawn - Configure Identities - Login 6)
+            // How to store the Identity in the database - BUT not the security (authentication)
+            // The system thinks it is a simple website and by default it is using cookies
+            services.AddIdentity<ApplicationUser, IdentityRole>(cfg=>
+                cfg.User.RequireUniqueEmail=true /*Shawn*/)
+                .AddEntityFrameworkStores<ApplicationDbContext>() // Entities stores in 
                 .AddDefaultTokenProviders();
+            
+            // But we need to use cookies and token as authentication - See below AddAuthentication
+
+
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();                     
-
-
+            services.AddTransient<IEmailSender, EmailSender>();          
+            
             // to make sure application is using Https - Global
             // AddMvc is already here
             services.AddMvc(options=> {
-                options.Filters.Add(new RequireHttpsAttribute());
+                options.Filters.Add(new RequireHttpsAttribute()); // adding to whole site
+                if (_env.IsProduction()) // Shawn - if in Production
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
+                }
             });
 
             // create dummy users - from Playbook
@@ -61,7 +75,7 @@ namespace Ehouse
             //  DefaultChallengeScheme - facebook is the challenge to the user
             //  DefaultSignInScheme - defualt signin after Authentication has taken place - using cookies
             //  DefaultAuthenticateScheme - what scheme to be used as defualt when incoming requests - cookie
-
+            
             services.AddAuthentication(options => {
                 options.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; 
@@ -70,7 +84,8 @@ namespace Ehouse
                 //options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 
             }).AddCookie(options => {
-                options.LoginPath = "/auth/signin";//- call back
+               // options.LoginPath = "/auth/signin";//- call back
+                options.LoginPath = "/home/gallery";//- call back
             }).AddFacebook(facebookOptions =>
             {
                 // this option set up is called set up configuration call back

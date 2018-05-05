@@ -1,4 +1,13 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using Ehouse.Data.Enitities
+@using Microsoft.AspNetCore.Identity;
+
+@model ApplicationUser
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
 @{
     ViewData["Title"] = "Gallery";
 }
@@ -11,13 +20,18 @@
             <h4>Ehouse photographer collection</h4>
             <hr />
             <div class="jumbotron">
-                <h1>Image collection / types of Images </h1>  
-                <p>
-                    <a class="btn btn-lg btn-success" asp-controller="Home" asp-action="Gallery">
-                        Book a photographer
-                    </a>
-                </p>                                
-            </div> 
+                @if (User.Identity.IsAuthenticated)
+                {
+                <p>You are back @User.Identity.Name</p>
+
+                }
+            <h1>Image collection / types of Images </h1>
+            <p>
+                <a class="btn btn-lg btn-success" asp-controller="Home" asp-action="Gallery">
+                    Book a photographer
+                </a>
+            </p>
+            </div>
         </form>
     </div>
 </div>

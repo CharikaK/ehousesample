@@ -1,0 +1,27 @@
+....
+**** dotnet ef tooling
+- Edit Ehouse.cs.proj (RC on the project > select Edit .cs.proj)
+- add the tools for migrations
+1) add to startup.cs 2)set up in the program.cs
+- startup.cs 
+	- startup constructor 	-> Iconfiguration object 
+				-> connection string 
+- Program.cs
+	- ConfigureAppConfiguration(SetupConfiguration)
+	- generate a method for SetupConfiguration ->  private static void SetupConfiguration(WebHostBuilderContext ctx, 												IConfigurationBuilder builder)
+		- builder.clear the sources
+		- builder.load the appsettings.json file and EnvironmentVariables
+	- Add the JSON file to the project -> create it as appsettings.json
+		- Setup connection string in appsettings.json
+
+update-database migration **** To Do
+- ApplicationDbContext.cs 
+	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {            
+        }
+update-database migration **** To Do
+
+
+
+enable-migrations

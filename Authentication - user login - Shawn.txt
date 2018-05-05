@@ -3,12 +3,24 @@ project properties  > Launch browser
 to go to Shop() 
 1 - add [Authorize] to the Shop() in AppController
 2 - Store identities in DB - create the modelname : Identity user and add extra properties
-3 - ApplicationDbContext : IdentityDbContext<modelname>
+3 - ApplicationDbCOntext.cs -> ApplicationDbContext : IdentityDbContext<modelname>
 4 - migrations to add changes to the entities
 5 - check user exist - UserManager<modelname> (async Task<> )
-6 - Startup.cs > ConfigurationServices  - services. AddIdentity<modelname, IdentityRole>()....
+6 - Configuring Identity
+	6.1 - Startup.cs > 
+	public void ConfigureServices(IServiceCollection services)
+        {
+	services.AddIdentity<ApplicationUser, IdentityRole>(cfg=>
+                cfg.User.RequireUniqueEmail=true /*Shawn*/)
+                .AddEntityFrameworkStores<ApplicationDbContext>() 
+
 7 - Startup.cs > Configure - app.UseAuthentication() after app.UseStaticFiles()
-8 - Login View
+Login View
+----------
+8 - AccountController : Controller // create theLogin function
+	ILogger 
+9 - Authentication - Set up tokens -  - cookie
+	Startup.cs - 
 
 
 to go to Bookashoot
@@ -16,13 +28,13 @@ Click on "Book a photoshoot" button > take to the booking page [Authorize]
 1 - add [Authorize] to the Bookashoot() in AppController
 2 - create StoreUser.cs in Enitities folder
 3 - :IdentityUser 
-4 - Instead of deriving DbContext, derive :IdentityDbContext  --> ApplicationDbContext:IdentityDbContext 
-5 - IdentityDbContext<ApplicationUser> This is to say user IdentityUser type is ApplicationUser
-6 - Booking entity - create a property for ApplicationUser. This is to say the owner of the booking and also the identity(authority)
-7 - public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+4 - ApplicationDbContext.cs -> Instead of deriving DbContext, derive :IdentityDbContext  --> ApplicationDbContext:IdentityDbContext 
+	5 - IdentityDbContext<ApplicationUser> This is to say user IdentityUser type is ApplicationUser
+	6 - Booking entity - create a property for ApplicationUser. This is to say the owner of the booking and also the identity(authority)
+	7 - public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
-8 - ApplicationDbContext > add DbSets for Booking, Photographer. ApplicationUser is not needed.
-9 - Add migration **** have to do this ***
+	8 - ApplicationDbContext > add DbSets for Booking, Photographer. ApplicationUser is not needed.
+9 - Add migration and update-database
 -------- Seeding -------
 10 - add UserManager to ApplicationSeed -> public ApplicationSeeder(ApplicationDbContext ctx, IHostingEnvironment hosting, 
             UserManager<ApplicationUser> userManager)
@@ -30,3 +42,6 @@ Click on "Book a photoshoot" button > take to the booking page [Authorize]
 11 - create user variable within Seed() to FindByEmai(). This is an async call and need to change Seed() to type Task
 12 - Task Seed() - change Seed() to Task as await
 13 - if user is null create the user manually - TO BE EDITED
+14 - return the result as user 
+15 - add it to Booking - TODO
+

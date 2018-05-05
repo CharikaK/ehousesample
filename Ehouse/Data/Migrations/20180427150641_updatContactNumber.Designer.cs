@@ -11,9 +11,10 @@ using System;
 namespace Ehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180427150641_updatContactNumber")]
+    partial class updatContactNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,45 +97,15 @@ namespace Ehouse.Data.Migrations
 
                     b.Property<DateTime>("BookingTime");
 
-                    b.Property<string>("Postcode");
+                    b.Property<string>("Category");
 
                     b.Property<string>("UserId");
 
-                    b.Property<int?>("photographerId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
-                    b.HasIndex("photographerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("Ehouse.Data.Enitities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("BookingId");
-
-                    b.Property<string>("Desc");
-
-                    b.Property<int?>("PhotographerId");
-
-                    b.Property<float>("Price");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("PhotographerId");
-
-                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Ehouse.Data.Enitities.Photographer", b =>
@@ -142,15 +113,15 @@ namespace Ehouse.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("PContactNo");
-
-                    b.Property<string>("PEmail");
+                    b.Property<int?>("BookingId");
 
                     b.Property<string>("PFname");
 
                     b.Property<string>("PLastname");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.ToTable("Photographers");
                 });
@@ -266,23 +237,15 @@ namespace Ehouse.Data.Migrations
             modelBuilder.Entity("Ehouse.Data.Enitities.Booking", b =>
                 {
                     b.HasOne("Ehouse.Data.Enitities.ApplicationUser", "User")
-                        .WithOne("booking")
-                        .HasForeignKey("Ehouse.Data.Enitities.Booking", "UserId");
-
-                    b.HasOne("Ehouse.Data.Enitities.Photographer", "photographer")
-                        .WithMany("Booking")
-                        .HasForeignKey("photographerId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Ehouse.Data.Enitities.Category", b =>
+            modelBuilder.Entity("Ehouse.Data.Enitities.Photographer", b =>
                 {
-                    b.HasOne("Ehouse.Data.Enitities.Booking")
-                        .WithMany("Category")
+                    b.HasOne("Ehouse.Data.Enitities.Booking", "Booking")
+                        .WithMany()
                         .HasForeignKey("BookingId");
-
-                    b.HasOne("Ehouse.Data.Enitities.Photographer")
-                        .WithMany("Category")
-                        .HasForeignKey("PhotographerId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
